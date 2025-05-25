@@ -2,6 +2,7 @@
 #include <Arduino.h>
 
 #include <river_bme688.h>
+#include <river_mb7040.h>
 #include <river_notecard.h>
 
 const char* PROJECT_ID = "com.alyx.par.winzell:river_gauge";
@@ -17,38 +18,41 @@ void setup()
 
     notecard_setup(PROJECT_ID, SERIAL_NUMBER);
 
-    bme688_setup();
+    //    bme688_setup();
+    mb7040_setup();
 }
 
 void loop()
 {
     Serial.println("River Gauge Main Loop");
 
-    RiverReading reading;
-    if (bme688_fill_readings(reading)) {
-        Serial.print("Air Temperature: ");
-        Serial.print(reading.airTemperature);
-        Serial.println(" *C");
+    mb7040_debug();
 
-        Serial.print("Humidity: ");
-        Serial.print(reading.humidity);
-        Serial.println(" %");
+    // RiverReading reading;
+    // if (bme688_fill_readings(reading)) {
+    //     Serial.print("Air Temperature: ");
+    //     Serial.print(reading.airTemperature);
+    //     Serial.println(" *C");
 
-        Serial.print("Pressure: ");
-        Serial.print(reading.pressure);
-        Serial.println(" hPa");
-    } else {
-        Serial.println("Failed to read from BME688");
-    }
+    //     Serial.print("Humidity: ");
+    //     Serial.print(reading.humidity);
+    //     Serial.println(" %");
 
-    // TODO: add water level reading
+    //     Serial.print("Pressure: ");
+    //     Serial.print(reading.pressure);
+    //     Serial.println(" hPa");
+    // } else {
+    //     Serial.println("Failed to read from BME688");
+    // }
 
-    if (notecard_upload_reading(reading)) {
-        Serial.println("Reading uploaded successfully.");
-    } // else error will already have been printed
+    // // TODO: add water level reading
 
-    Serial.println("–––––––––––––––––––––––––––––");
-    Serial.println();
+    // if (notecard_upload_reading(reading)) {
+    //     Serial.println("Reading uploaded successfully.");
+    // } // else error will already have been printed
+    // Serial.println("–––––––––––––––––––––––––––––");
+    // Serial.println();
 
-    delay(1 * 60 * 1000); // 1 minute delay
+    // delay(1 * 60 * 1000); // 1 minute delay
+    delay(1000);
 }

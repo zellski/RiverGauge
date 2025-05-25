@@ -22,13 +22,15 @@ void bme688_setup()
 {
     if (!bme.begin(0x77, true)) {
         Serial.println("Could not find a valid BME680 sensor, check wiring!");
-        // Set up oversampling and filter initialization
-        bme.setTemperatureOversampling(BME680_OS_16X);
-        bme.setHumidityOversampling(BME680_OS_16X);
-        bme.setPressureOversampling(BME680_OS_16X);
-        bme.setIIRFilterSize(BME680_FILTER_SIZE_3);
-        bme.setGasHeater(320, 150); // 320*C for 150 ms
+        return;
     }
+    // Set up oversampling and filter initialization
+    bme.setTemperatureOversampling(BME680_OS_16X);
+    bme.setHumidityOversampling(BME680_OS_16X);
+    bme.setPressureOversampling(BME680_OS_16X);
+    bme.setIIRFilterSize(BME680_FILTER_SIZE_3);
+    bme.setGasHeater(320, 150); // 320*C for 150 ms
+    Serial.println("BME680 sensor initialized successfully.");
 }
 
 bool bme688_fill_readings(RiverReading& reading)
